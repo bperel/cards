@@ -1,4 +1,4 @@
-FROM php:7-cli-alpine
+FROM php:8-cli-alpine
 RUN apk add freetype-dev \
             libjpeg-turbo-dev \
             libpng-dev

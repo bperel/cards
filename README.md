@@ -7,13 +7,26 @@ Available games :
 - `timesup` (Time's Up!)
 - `codenames` (Codenames)
 
+Available misc generations:
+- `book-separators` (Labels for bookcases)
+
 #### Running
 
+### Games
+
 ```bash
-docker run -it --rm -v "$(pwd):/home" bperel/cards:0.1.2 -c 'game=codenames;php games/$game/create_cards.php && php games/$game/assemble_cards.php'
+docker run -it --rm -v "$(pwd):/home" bperel/cards:0.1.2 -c 'game=codenames;php games/$game/create_cards.php && php assemble_cards.php games/$game'
 ```
 
 This will export ready-to-print card sheets to `games/<game>/export/sheets`.
+
+### Misc
+
+```bash
+docker run -it --rm -v "$(pwd):/home" bperel/cards:0.1.2 -c 'misc=book-separators; php misc/$misc/create_cards.php && php assemble_cards.php misc/$misc'
+```
+
+This will export ready-to-print card sheets to `misc/<misc>/export/sheets`.
 
 #### Building
 

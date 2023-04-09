@@ -1,19 +1,19 @@
 <?php
 
-@rmdir(__DIR__.'/export/sheets');
-@mkdir(__DIR__.'/export/sheets', 0777, true);
+[,$directory] = $argv;
+@rmdir($directory .'/export/sheets');
+@mkdir($directory .'/export/sheets', 0777, true);
 
-$cardFiles = array_values(array_filter(scandir(__DIR__.'/export/cards'), function(string $file) {
-    return $file !== '.' && $file !== '..';
-}));
+$cardFiles = array_values(array_filter(scandir($directory .'/export/cards'), fn(string $file) => $file !== '.' && $file !== '..'));
 
 $cardsPerRow = 3;
 $cardsPerColumn = 6;
 $padding = 30;
 
 $sheetNumber = 0;
+
 foreach($cardFiles as $cardNumber => $cardFile) {
-    $image = imagecreatefrompng(__DIR__."/export/cards/$cardFile");
+    $image = imagecreatefrompng($directory ."/export/cards/$cardFile");
     $imageWidth = imagesx($image);
     $imageHeight = imagesy($image);
 
@@ -23,8 +23,8 @@ foreach($cardFiles as $cardNumber => $cardFile) {
 
     if ($cardNumber % ($cardsPerRow * $cardsPerColumn) === 0) {
         if (isset($sheet)) {
-            imagepng($sheet, __DIR__."/export/sheets/$sheetNumber.png");
-            chmod(__DIR__."/export/sheets/$sheetNumber.png", 0777);
+            imagepng($sheet, $directory ."/export/sheets/$sheetNumber.png");
+            chmod($directory ."/export/sheets/$sheetNumber.png", 0777);
             $sheetNumber++;
         }
         echo "Sheet $sheetNumber\n";
@@ -48,4 +48,5 @@ foreach($cardFiles as $cardNumber => $cardFile) {
         $imageHeight
     );
 }
-imagepng($sheet, __DIR__."/export/sheets/$sheetNumber.png");
+imagepng($sheet, $directory ."/export/sheets/$sheetNumber.png");
+chmod($directory . "/export/sheets/$sheetNumber.png", 0777);
